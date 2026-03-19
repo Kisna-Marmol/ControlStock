@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:fillViewport="true"
+    tools:context=".Login">
+
+    <!-- ─── LOGO ─────────────────────────────────────────────────────────── -->
+
+    <!-- ─── TÍTULO ────────────────────────────────────────────────────────── -->
+
+    <!-- ─── SUBTÍTULO ─────────────────────────────────────────────────────── -->
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="126dp"
+        android:layout_height="131dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icono_sin_fondo" />
+
+    <TextView
+        android:id="@+id/tbl_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Bienvenido"
+        android:textAlignment="center"
+        android:textColor="@color/texto_principal"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_logo" />
+
+    <TextView
+        android:id="@+id/tbl_subtitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="Iniciar sesion para continuar"
+        android:textColor="@color/texto_secundario"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tbl_titulo" />
+
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- PANEL LOGIN                                                -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <LinearLayout
+        android:id="@+id/panel_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/tbl_subtitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <!-- Label Correo -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:text="Correo electrónico"
+            android:textColor="@color/texto_principal"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <!-- Campo Correo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ct_email"
+                app:tint="@color/texto_secundario" />
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="tu@email.com"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/texto_principal"
+                android:textColorHint="@color/texto_secundario"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Label Contraseña -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="6dp"
+            android:text="Contraseña"
+            android:textColor="@color/texto_principal"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <!-- Campo Contraseña -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_input"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ct_lock"
+                app:tint="@color/texto_secundario" />
+
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="••••••••"
+                android:inputType="textPassword"
+                android:textColor="@color/texto_principal"
+                android:textColorHint="@color/texto_secundario"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/iv_toggle_password"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ct_eye"
+                app:tint="@color/texto_secundario" />
+        </LinearLayout>
+
+        <!-- Recordarme + Olvidaste -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cb_recordarme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorPrincipal"
+                android:text="Recordarme"
+                android:textColor="@color/texto_secundario"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tv_olvide_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="¿Olvidaste tu contraseña?"
+                android:textColor="@color/texto_secundario"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Botón Iniciar Sesión -->
+        <Button
+            android:id="@+id/btn_iniciar_sesion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="Iniciar sesión"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:backgroundTint="@color/colorPrincipal"
+            android:elevation="4dp"/>
+
+        <!-- Divider: O continúa con -->
+
+        <!-- Botones sociales -->
+
+    </LinearLayout>
+    <!-- FIN PANEL LOGIN -->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

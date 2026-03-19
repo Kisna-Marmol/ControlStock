@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- paleta de colores para esta aplicacion -->
+    <color name="colorPrincipal">#1E3A8A</color>
+    <color name="colorSecundario">#3B82F6</color>
+    <color name="colorAcento">#10B981</color>
+    <color name="fondo">#F3F4F6</color>
+    <!-- Texto -->
+    <color name="texto_principal">#1F2937</color>
+    <color name="texto_secundario">#7F8C8D</color>
 </resources>
