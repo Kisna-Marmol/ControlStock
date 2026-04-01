@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_gris">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/azul_principal"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:id="@+id/btnVolver"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ct_arrow_back"
+                android:tint="@color/blanco"
+                android:padding="8dp"
+                android:contentDescription="Volver"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Productos"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/btnQrScan"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ct_qr_code_scanner"
+                android:tint="@color/blanco"
+                android:padding="8dp"
+                android:contentDescription="Escanear QR"/>
+        </RelativeLayout>
+
+        <!-- Búsqueda -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/blanco">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ct_search"
+                    android:tint="@color/gris_icono"
+                    android:contentDescription="Buscar"/>
+
+                <EditText
+                    android:id="@+id/etBuscar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Buscar producto o código QR..."
+                    android:textColorHint="@color/gris_icono"
+                    android:textColor="@color/texto_oscuro"
+                    android:textSize="14sp"
+                    android:background="@null"
+                    android:paddingStart="10dp"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Chips de categoría -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/layoutFiltros"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/chipTodos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:text="Todos"
+                    android:textColor="@color/azul_principal"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_chip_selected"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:gravity="center"
+                    android:layout_marginEnd="8dp"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <!-- SCROLL CONTENIDO -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="195dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="80dp">
+
+            <!-- Contador -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
+                android:paddingTop="22dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvContador"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 productos encontrados"
+                    android:textColor="@color/texto_secundario"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:id="@+id/btnOrdenar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_chip_selected"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="6dp">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:contentDescription="Ordenar"
+                        android:src="@drawable/ct_sort"
+                        android:tint="@color/azul_claro" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:text="Ordenar"
+                        android:textColor="@color/azul_claro"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- Lista de productos -->
+            <LinearLayout
+                android:id="@+id/layoutProductos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+
+            <!-- Estado vacío -->
+            <LinearLayout
+                android:id="@+id/layoutVacio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="60dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:alpha="0.4"
+                    android:contentDescription="Sin productos"
+                    android:src="@drawable/ct_inventory"
+                    android:tint="@color/gris_icono" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="No se encontraron productos"
+                    android:textColor="@color/texto_secundario"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Loading -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:indeterminateTint="@color/azul_claro"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ct_add"
+        android:contentDescription="Agregar producto"
+        app:backgroundTint="@color/verde_acento"
+        app:tint="@color/blanco"
+        app:elevation="6dp"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

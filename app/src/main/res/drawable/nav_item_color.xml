@@ -1,0 +1,5 @@
+<!--  res/drawable/nav_item_color.xml  -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#1E3A8A" android:state_checked="true"/>
+    <item android:color="#9CA3AF"/>
+</selector>

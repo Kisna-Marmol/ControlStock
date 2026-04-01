@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_inicio" android:icon="@drawable/ct_home" android:title="Inicio" android:checked="true"/>
+    <item android:id="@+id/nav_reportes" android:icon="@drawable/ct_bar_chart" android:title="Reportes"/>
+    <item android:id="@+id/nav_notificaciones" android:icon="@drawable/ct_notifications" android:title="Notif."/>
+    <item android:id="@+id/nav_config" android:icon="@drawable/ct_settings" android:title="Config."/>
+</menu>

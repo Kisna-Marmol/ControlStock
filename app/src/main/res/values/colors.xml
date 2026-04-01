@@ -9,11 +9,18 @@
     <color name="white">#FFFFFFFF</color>
 
     <!-- paleta de colores para esta aplicacion -->
-    <color name="colorPrincipal">#1E3A8A</color>
-    <color name="colorSecundario">#3B82F6</color>
-    <color name="colorAcento">#10B981</color>
-    <color name="fondo">#F3F4F6</color>
-    <!-- Texto -->
-    <color name="texto_principal">#1F2937</color>
-    <color name="texto_secundario">#7F8C8D</color>
+    <color name="azul_principal">#1E3A8A</color>
+    <color name="azul_claro">#3B82F6</color>
+    <color name="verde_acento">#10B981</color>
+    <color name="fondo_gris">#F3F4F6</color>
+    <color name="texto_oscuro">#1F2937</color>
+    <color name="texto_secundario">#6B7280</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="rojo_negativo">#EF4444</color>
+    <color name="verde_positivo">#10B981</color>
+    <color name="verde_acento_trans">#1A10B981</color>
+    <color name="azul_trans">#1A3B82F6</color>
+    <color name="amber">#F59E0B</color>
+    <color name="amber_trans">#1AF59E0B</color>
+    <color name="gris_icono">#9CA3AF</color>
 </resources>

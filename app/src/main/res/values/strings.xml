@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ControlStock</string>
+
+    <string name="seleccione_categoria">Seleccione categoría</string>
+    <string name="seleccione_unidad">Seleccione unidad</string>
+    <string name="seleccione_proveedor">Seleccione proveedor</string>
 </resources>

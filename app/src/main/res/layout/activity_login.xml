@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo"
+    android:background="@color/fondo_gris"
     android:fillViewport="true"
     tools:context=".Login">
 
@@ -31,7 +31,7 @@
         android:layout_marginTop="52dp"
         android:text="Bienvenido"
         android:textAlignment="center"
-        android:textColor="@color/texto_principal"
+        android:textColor="@color/texto_oscuro"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
             android:text="Correo electrónico"
-            android:textColor="@color/texto_principal"
+            android:textColor="@color/texto_oscuro"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -100,9 +100,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="tu@email.com"
+                android:hint="Ingresa tu usuario o email"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/texto_principal"
+                android:textColor="@color/texto_oscuro"
                 android:textColorHint="@color/texto_secundario"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -114,7 +114,7 @@
             android:layout_marginTop="14dp"
             android:layout_marginBottom="6dp"
             android:text="Contraseña"
-            android:textColor="@color/texto_principal"
+            android:textColor="@color/texto_oscuro"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
                 android:background="@null"
                 android:hint="••••••••"
                 android:inputType="textPassword"
-                android:textColor="@color/texto_principal"
+                android:textColor="@color/texto_oscuro"
                 android:textColorHint="@color/texto_secundario"
                 android:textSize="14sp" />
 
@@ -169,7 +169,7 @@
                 android:id="@+id/cb_recordarme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/colorPrincipal"
+                android:buttonTint="@color/azul_principal"
                 android:text="Recordarme"
                 android:textColor="@color/texto_secundario"
                 android:textSize="12sp" />
@@ -201,7 +201,7 @@
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:backgroundTint="@color/colorPrincipal"
+            android:backgroundTint="@color/azul_principal"
             android:elevation="4dp"/>
 
         <!-- Divider: O continúa con -->

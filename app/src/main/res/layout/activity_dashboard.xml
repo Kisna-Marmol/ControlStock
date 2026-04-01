@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DashboardActivity"
+    android:background="@color/fondo_gris">
+
+    <!--  SCROLL PRINCIPAL  -->
+    <androidx.core.widget.NestedScrollView android:id="@+id/scrollView" android:layout_width="match_parent" android:layout_height="match_parent" android:fillViewport="true" app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingBottom="80dp">
+            <!-- HEADER AZUL OSCURO -->
+            <RelativeLayout android:id="@+id/layoutHeader" android:layout_width="match_parent" android:layout_height="140dp" android:background="@color/azul_principal" android:paddingStart="20dp" android:paddingEnd="20dp" android:paddingTop="40dp" android:paddingBottom="20dp">
+                <!-- Saludo -->
+                <LinearLayout android:id="@+id/layoutSaludo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_centerVertical="true">
+                    <TextView android:id="@+id/tvHola" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hola," android:textColor="@color/blanco" android:textSize="16sp" android:alpha="0.85"/>
+                    <TextView android:id="@+id/tvNombreUsuario" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Usuario" android:textColor="@color/blanco" android:textSize="26sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <!-- Ícono de perfil -->
+                <ImageView android:id="@+id/ivPerfil" android:layout_width="48dp" android:layout_height="48dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:background="@drawable/bg_circulo_azul" android:src="@drawable/ct_person" android:padding="10dp" android:tint="@color/blanco" android:contentDescription="Perfil"/>
+            </RelativeLayout>
+            <!-- BARRA DE BÚSQUEDA -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingStart="16dp" android:paddingEnd="16dp" android:paddingTop="16dp" android:paddingBottom="8dp">
+                <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="52dp" app:cardCornerRadius="12dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/blanco">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="horizontal" android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ct_search" android:tint="@color/gris_icono" android:contentDescription="Buscar"/>
+                        <EditText android:id="@+id/etBuscar" android:layout_width="match_parent" android:layout_height="match_parent" android:hint="Buscar..." android:textColorHint="@color/gris_icono" android:textColor="@color/texto_oscuro" android:textSize="15sp" android:background="@null" android:paddingStart="10dp" android:singleLine="true" android:imeOptions="actionSearch" android:inputType="text"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+            <!-- ACCESOS RÁPIDOS -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="16dp" android:paddingEnd="16dp" android:paddingTop="8dp" android:paddingBottom="4dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Accesos Rápidos" android:textColor="@color/texto_oscuro" android:textSize="17sp" android:textStyle="bold" android:layout_marginBottom="12dp"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:weightSum="4">
+                    <!--  Productos  -->
+                    <LinearLayout android:id="@+id/btnAccesoProductos" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:padding="4dp">
+                        <androidx.cardview.widget.CardView android:layout_width="56dp" android:layout_height="56dp" app:cardCornerRadius="14dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/blanco">
+                            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center" android:src="@drawable/ct_inventory" android:tint="@color/azul_claro" android:contentDescription="Productos"/>
+                        </androidx.cardview.widget.CardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Productos" android:textColor="@color/texto_oscuro" android:textSize="11sp" android:gravity="center" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+                    <!--  Ventas  -->
+                    <LinearLayout android:id="@+id/btnAccesoVentas" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:padding="4dp">
+                        <androidx.cardview.widget.CardView android:layout_width="56dp" android:layout_height="56dp" app:cardCornerRadius="14dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/blanco">
+                            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center" android:src="@drawable/ct_shopping_cart" android:tint="@color/verde_acento" android:contentDescription="Ventas"/>
+                        </androidx.cardview.widget.CardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ventas" android:textColor="@color/texto_oscuro" android:textSize="11sp" android:gravity="center" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+                    <!--  Reportes  -->
+                    <LinearLayout android:id="@+id/btnAccesoReportes" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:padding="4dp">
+                        <androidx.cardview.widget.CardView android:layout_width="56dp" android:layout_height="56dp" app:cardCornerRadius="14dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/blanco">
+                            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center" android:src="@drawable/ct_bar_chart" android:tint="@color/amber" android:contentDescription="Reportes"/>
+                        </androidx.cardview.widget.CardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reportes" android:textColor="@color/texto_oscuro" android:textSize="11sp" android:gravity="center" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+                    <!--  Config  -->
+                    <LinearLayout android:id="@+id/btnAccesoConfig" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:padding="4dp">
+                        <androidx.cardview.widget.CardView android:layout_width="56dp" android:layout_height="56dp" app:cardCornerRadius="14dp" app:cardElevation="2dp" app:cardBackgroundColor="@color/blanco">
+                            <ImageView android:layout_width="28dp" android:layout_height="28dp" android:layout_gravity="center" android:src="@drawable/ct_settings" android:tint="@color/gris_icono" android:contentDescription="Configuración"/>
+                        </androidx.cardview.widget.CardView>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Config." android:textColor="@color/texto_oscuro" android:textSize="11sp" android:gravity="center" android:layout_marginTop="6dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <!-- TARJETAS DE RESUMEN -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Resumen"
+                    android:textColor="@color/texto_oscuro"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+                <!--  Fila 1: Ventas Hoy + Clientes  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <!--  Ventas Hoy  -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardVentas"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/blanco"
+                        app:cardCornerRadius="14dp"
+                        app:cardElevation="2dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/ivVentasIcon"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:contentDescription="Ventas"
+                                android:src="@drawable/ct_attach_money"
+                                android:tint="@color/azul_claro" />
+
+                            <TextView
+                                android:id="@+id/tvVentasPorcentaje"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="+12%"
+                                android:textColor="@color/verde_acento"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvVentasLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/ivVentasIcon"
+                                android:layout_marginTop="8dp"
+                                android:text="Ventas Hoy"
+                                android:textColor="@color/texto_secundario"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvVentasValor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvVentasLabel"
+                                android:layout_marginTop="2dp"
+                                android:text="$0,0"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                    <!--  Clientes  -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardClientes"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/blanco"
+                        app:cardCornerRadius="14dp"
+                        app:cardElevation="2dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/ivClientesIcon"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:contentDescription="Clientes"
+                                android:src="@drawable/ct_group"
+                                android:tint="@color/azul_claro" />
+
+                            <TextView
+                                android:id="@+id/tvClientesPorcentaje"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="+8%"
+                                android:textColor="@color/verde_acento"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvClientesLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/ivClientesIcon"
+                                android:layout_marginTop="8dp"
+                                android:text="Clientes"
+                                android:textColor="@color/texto_secundario"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvClientesValor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvClientesLabel"
+                                android:layout_marginTop="2dp"
+                                android:text="0"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+                <!--  Fila 2: Ingresos + Productos  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <!--  Ingresos  -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardIngresos"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/blanco"
+                        app:cardCornerRadius="14dp"
+                        app:cardElevation="2dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/ivIngresosIcon"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:contentDescription="Ingresos"
+                                android:src="@drawable/ct_trending_up"
+                                android:tint="@color/verde_acento" />
+
+                            <TextView
+                                android:id="@+id/tvIngresosPorcentaje"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="+23%"
+                                android:textColor="@color/verde_acento"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvIngresosLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/ivIngresosIcon"
+                                android:layout_marginTop="8dp"
+                                android:text="Ingresos"
+                                android:textColor="@color/texto_secundario"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvIngresosValor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvIngresosLabel"
+                                android:layout_marginTop="2dp"
+                                android:text="$0.0k"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                    <!--  Productos  -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardProductos"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/blanco"
+                        app:cardCornerRadius="14dp"
+                        app:cardElevation="2dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="12dp">
+
+                            <ImageView
+                                android:id="@+id/ivProductosIcon"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
+                                android:contentDescription="Productos"
+                                android:src="@drawable/ct_inventory"
+                                android:tint="@color/azul_claro" />
+
+                            <TextView
+                                android:id="@+id/tvProductosPorcentaje"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:text="-2%"
+                                android:textColor="@color/rojo_negativo"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvProductosLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/ivProductosIcon"
+                                android:layout_marginTop="8dp"
+                                android:text="Productos"
+                                android:textColor="@color/texto_secundario"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvProductosValor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tvProductosLabel"
+                                android:layout_marginTop="2dp"
+                                android:text="0"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+            <!-- ACTIVIDAD RECIENTE -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="16dp" android:paddingEnd="16dp" android:paddingTop="16dp" android:paddingBottom="8dp">
+                <!--  Cabecera sección  -->
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:text="Actividad Reciente" android:textColor="@color/texto_oscuro" android:textSize="17sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tvVerTodo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:text="Ver todo" android:textColor="@color/azul_claro" android:textSize="13sp"/>
+                </RelativeLayout>
+                <!--  Item 1: Nueva venta  -->
+                <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp" app:cardCornerRadius="12dp" app:cardElevation="1dp" app:cardBackgroundColor="@color/blanco">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="14dp">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ct_check_circle" android:tint="@color/verde_acento" android:contentDescription="Venta"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp" android:paddingEnd="8dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nueva venta registrada" android:textColor="@color/texto_oscuro" android:textSize="14sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pedido #1234 completado" android:textColor="@color/texto_secundario" android:textSize="12sp" android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 5m" android:textColor="@color/gris_icono" android:textSize="11sp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--  Item 2: Nuevo cliente  -->
+                <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp" app:cardCornerRadius="12dp" app:cardElevation="1dp" app:cardBackgroundColor="@color/blanco">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="14dp">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ct_person_add" android:tint="@color/azul_claro" android:contentDescription="Cliente"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp" android:paddingEnd="8dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nuevo cliente registrado" android:textColor="@color/texto_oscuro" android:textSize="14sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="María González se registró" android:textColor="@color/texto_secundario" android:textSize="12sp" android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 15m" android:textColor="@color/gris_icono" android:textSize="11sp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--  Item 3: Stock bajo  -->
+                <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp" app:cardCornerRadius="12dp" app:cardElevation="1dp" app:cardBackgroundColor="@color/blanco">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="14dp">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ct_inventory" android:tint="@color/amber" android:contentDescription="Stock"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp" android:paddingEnd="8dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Stock bajo" android:textColor="@color/texto_oscuro" android:textSize="14sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Producto XYZ necesita reabastecimiento" android:textColor="@color/texto_secundario" android:textSize="12sp" android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 1h" android:textColor="@color/gris_icono" android:textSize="11sp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <!--  Item 4: Reporte generado  -->
+                <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp" app:cardCornerRadius="12dp" app:cardElevation="1dp" app:cardBackgroundColor="@color/blanco">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="14dp">
+                        <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ct_schedule" android:tint="@color/gris_icono" android:contentDescription="Reporte"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:paddingStart="12dp" android:paddingEnd="8dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reporte generado" android:textColor="@color/texto_oscuro" android:textSize="14sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reporte mensual de ventas" android:textColor="@color/texto_secundario" android:textSize="12sp" android:layout_marginTop="2dp"/>
+                        </LinearLayout>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 2h" android:textColor="@color/gris_icono" android:textSize="11sp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <!-- BOTÓN FLOTANTE (+) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="Agregar"
+        android:src="@drawable/ct_add"
+        android:visibility="invisible"
+        app:backgroundTint="@color/verde_acento"
+        app:elevation="6dp"
+        app:layout_anchor="@id/bottomNavigationView"
+        app:layout_anchorGravity="top|end"
+        app:tint="@color/blanco"
+        tools:ignore="MissingConstraints" />
+    <!--  BOTTOM NAVIGATION -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/blanco"
+        app:itemIconTint="@drawable/nav_item_color"
+        app:itemTextColor="@drawable/nav_item_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

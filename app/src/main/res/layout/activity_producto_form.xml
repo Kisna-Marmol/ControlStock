@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_gris">
+
+    <!-- HEADER -->
+    <RelativeLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/azul_principal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="20dp">
+
+        <ImageView
+            android:id="@+id/btnVolver"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ct_arrow_back"
+            android:tint="@color/blanco"
+            android:padding="8dp"
+            android:contentDescription="Volver"/>
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Nuevo Producto"
+            android:textColor="@color/blanco"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+    <!-- SCROLL PRINCIPAL -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:paddingBottom="100dp">
+
+            <!-- ══════════════════════════════ -->
+            <!-- SECCIÓN FOTO                   -->
+            <!-- ══════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Foto del producto"
+                        android:textColor="@color/texto_oscuro"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- Preview de la foto -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardFotoPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="#F5F0E8">
+
+                        <ImageView
+                            android:id="@+id/ivFotoPreview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ct_add_photo"
+                            android:contentDescription="Foto producto"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Botón tomar foto -->
+                    <Button
+                        android:id="@+id/btnTomarFoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="12dp"
+                        android:text="Tomar foto"
+                        android:textColor="@color/blanco"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_badge_azul"
+                        app:background="@null"
+                        android:drawableStart="@drawable/ct_camera"
+                        android:drawablePadding="8dp"
+                        android:paddingStart="16dp"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════ -->
+            <!-- SECCIÓN INFORMACIÓN BÁSICA     -->
+            <!-- ══════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Información básica"
+                        android:textColor="@color/texto_oscuro"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Nombre -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre *"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginBottom="14dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <EditText
+                            android:id="@+id/etNombre"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Ej. Audífonos inalámbricos"
+                            android:textColorHint="@color/gris_icono"
+                            android:textColor="@color/texto_oscuro"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:inputType="textCapSentences"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Descripción -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Descripción"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_marginBottom="14dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <EditText
+                            android:id="@+id/etDescripcion"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Descripción del producto..."
+                            android:textColorHint="@color/gris_icono"
+                            android:textColor="@color/texto_oscuro"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:paddingTop="12dp"
+                            android:gravity="top"
+                            android:inputType="textMultiLine"
+                            android:lines="3"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Stock -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stock inicial *"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <EditText
+                            android:id="@+id/etStock"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="0"
+                            android:textColorHint="@color/gris_icono"
+                            android:textColor="@color/texto_oscuro"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:inputType="number"/>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════ -->
+            <!-- SECCIÓN CÓDIGO QR              -->
+            <!-- ══════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Código QR"
+                        android:textColor="@color/texto_oscuro"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <!-- Campo código QR -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="0.7"
+                            android:layout_marginEnd="10dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@color/fondo_gris">
+
+                            <EditText
+                                android:id="@+id/etCodigoQr"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Código QR / Barras"
+                                android:textColorHint="@color/gris_icono"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="13sp"
+                                android:background="@null"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="14dp"
+                                android:inputType="text"/>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Botón escanear -->
+                        <Button
+                            android:id="@+id/btnEscanearQr"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="0.3"
+                            android:text="Escanear"
+                            android:textColor="@color/blanco"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/bg_btn_primary"
+                            app:background="@null"
+                            android:drawableTop="@drawable/ct_qr_code_scanner"
+                            android:drawablePadding="2dp"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════ -->
+            <!-- SECCIÓN CLASIFICACIÓN          -->
+            <!-- ══════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Clasificación"
+                        android:textColor="@color/texto_oscuro"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="16dp"/>
+
+                    <!-- Categoría -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Categoría *"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginBottom="14dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <Spinner
+                            android:id="@+id/spinnerCategoria"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:prompt="@string/seleccione_categoria"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Unidad de medida -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unidad de medida *"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginBottom="14dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <Spinner
+                            android:id="@+id/spinnerUnidad"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:prompt="@string/seleccione_unidad"/>
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Proveedor -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Proveedor *"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <Spinner
+                            android:id="@+id/spinnerProveedor"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:prompt="@string/seleccione_proveedor"/>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════ -->
+            <!-- SECCIÓN UBICACIÓN GPS          -->
+            <!-- ══════════════════════════════ -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/blanco">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ubicación GPS"
+                        android:textColor="@color/texto_oscuro"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <!-- Coordenadas -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:layout_marginBottom="12dp">
+
+                        <!-- Latitud -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@color/fondo_gris">
+
+                            <EditText
+                                android:id="@+id/etLatitud"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Latitud"
+                                android:textColorHint="@color/gris_icono"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="13sp"
+                                android:background="@null"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="14dp"
+                                android:inputType="numberDecimal|numberSigned"
+                                android:focusable="false"/>
+                        </androidx.cardview.widget.CardView>
+
+                        <!-- Longitud -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            app:cardCornerRadius="10dp"
+                            app:cardElevation="0dp"
+                            app:cardBackgroundColor="@color/fondo_gris">
+
+                            <EditText
+                                android:id="@+id/etLongitud"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Longitud"
+                                android:textColorHint="@color/gris_icono"
+                                android:textColor="@color/texto_oscuro"
+                                android:textSize="13sp"
+                                android:background="@null"
+                                android:paddingStart="14dp"
+                                android:paddingEnd="14dp"
+                                android:inputType="numberDecimal|numberSigned"
+                                android:focusable="false"/>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <!-- Botón obtener ubicación -->
+                    <Button
+                        android:id="@+id/btnObtenerUbicacion"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="Obtener ubicación actual"
+                        android:textColor="@color/blanco"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:background="@drawable/bg_btn_primary"
+                        android:drawableStart="@drawable/ct_location_on"
+                        app:backgroundTint="@null"
+                        android:drawablePadding="8dp"
+                        android:paddingStart="16dp"/>
+
+                    <!-- Estado GPS -->
+                    <TextView
+                        android:id="@+id/tvEstadoGps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/verde_acento"
+                        android:textSize="12sp"
+                        android:layout_marginTop="8dp"
+                        android:layout_gravity="center_horizontal"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ══════════════════════════════ -->
+            <!-- BOTÓN GUARDAR                  -->
+            <!-- ══════════════════════════════ -->
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Guardar producto"
+                android:textColor="@color/blanco"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_btn_guardar"
+                app:backgroundTint= "@null"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
