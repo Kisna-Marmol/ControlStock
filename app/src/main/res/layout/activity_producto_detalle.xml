@@ -46,6 +46,7 @@
                 android:src="@drawable/ct_arrow_back"
                 android:tint="@color/blanco"
                 android:background="@drawable/bg_circulo_semitrans"
+                app:backgroundTint= "@null"
                 android:padding="10dp"
                 android:contentDescription="Volver"/>
 
@@ -449,6 +450,7 @@
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:background="@drawable/bg_btn_primary"
+                    app:backgroundTint= "@null"
                     android:drawableStart="@drawable/ct_map"
                     android:drawablePadding="8dp"/>
 
@@ -477,7 +479,8 @@
                 android:textColor="@color/rojo_negativo"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:background="@drawable/bg_btn_outline_rojo"/>
+                android:background="@drawable/bg_btn_outline_rojo"
+                app:backgroundTint= "@null"/>
 
             <!-- Editar -->
             <Button
@@ -490,7 +493,8 @@
                 android:textColor="@color/blanco"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:background="@drawable/bg_btn_guardar"/>
+                android:background="@drawable/bg_btn_guardar"
+                app:backgroundTint= "@null"/>
 
         </LinearLayout>
 

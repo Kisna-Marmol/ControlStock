@@ -1,10 +1,10 @@
 package com.example.controlstock;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -13,23 +13,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.controlstock.clases.ApiService;
-import com.example.controlstock.clases.Bitacora;
 import com.example.controlstock.clases.Config;
 import com.example.controlstock.clases.Dialog;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLData;
 public class Login extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
@@ -169,9 +161,14 @@ public class Login extends AppCompatActivity {
 
                     String username = data.getString("user_nombre");
                     int userId      = data.getInt("user_id");
+                    int rolId       = data.getInt("rol_id");
 
                     Config.usuario = username;
                     Config.iduser = userId;
+                    Config.rolId   = rolId;
+
+                    // Cargar accesos antes de ir al Dashboard
+                    cargarAccesosYNavegar(username, userId);
 
                     if (recordar) {
                         guardarUsuario(usuario, clave);
@@ -185,6 +182,35 @@ public class Login extends AppCompatActivity {
                     Log.e("LOGIN_PARSE", "Error: " + e.getMessage());
                     Dialog.toast(Login.this, "Error procesando respuesta: " + e.getMessage());
                 }
+            }
+
+            private void cargarAccesosYNavegar(String username, int userId) {
+                ApiService.get(Config.local + "acceso_usuario.php?usuario_id=" + userId,
+                        new ApiService.ApiCallback() {
+                            @Override
+                            public void onSuccess(String response) {
+                                try {
+                                    JSONObject res = new JSONObject(response);
+                                    if (res.optBoolean("success", false)) {
+                                        org.json.JSONArray accesos = res.getJSONArray("accesos");
+                                        Config.accesosActivos.clear();
+                                        for (int i = 0; i < accesos.length(); i++) {
+                                            Config.accesosActivos.add(accesos.getString(i));
+                                        }
+                                        Log.d("ACCESOS", "Accesos cargados: " + Config.accesosActivos.toString());
+                                    }
+                                } catch (Exception e) {
+                                    Log.e("ACCESOS", e.getMessage());
+                                }
+                                // Navegar siempre, aunque falle la carga de accesos
+                                llamarPral(username, userId);
+                            }
+                            @Override
+                            public void onError(String error) {
+                                Log.e("ACCESOS", "Error: " + error);
+                                llamarPral(username, userId);
+                            }
+                        });
             }
 
             @Override
@@ -202,10 +228,5 @@ public class Login extends AppCompatActivity {
         startActivity(intent);
         finish(); // Elimina el splash del stack para que no se regrese a él
     }
-    /*private void llamarCrearUser()
-    {
-        Intent intent = new Intent(Login.this, CrearcionUsuarios.class);
-        startActivity(intent);
-        finish(); // Elimina el splash del stack para que no se regrese a él
-    }*/
+
 }

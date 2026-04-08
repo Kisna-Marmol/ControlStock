@@ -20,9 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.controlstock.clases.ApiService;
 import com.example.controlstock.clases.Config;
 import com.example.controlstock.clases.Dialog;
+import com.example.controlstock.clases.Utils;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -58,6 +60,8 @@ public class ProductoFormActivity extends AppCompatActivity {
     private Spinner spinnerCategoria, spinnerUnidad, spinnerProveedor;
     private TextView tvEstadoGps;
 
+    private EditText etPrecio;
+
     // ── Datos ─────────────────────────────────────────────
     private Bitmap bitmapFoto;
     private FusedLocationProviderClient fusedLocationClient;
@@ -70,6 +74,9 @@ public class ProductoFormActivity extends AppCompatActivity {
     private List<Integer> listaIdsProv      = new ArrayList<>();
 
     // ─────────────────────────────────────────────────────
+
+    private int productoId = 0;
+    private String modo    = "crear";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +94,7 @@ public class ProductoFormActivity extends AppCompatActivity {
         etNombre         = findViewById(R.id.etNombre);
         etDescripcion    = findViewById(R.id.etDescripcion);
         etStock          = findViewById(R.id.etStock);
+        etPrecio = findViewById(R.id.etPrecio);
         etCodigoQr       = findViewById(R.id.etCodigoQr);
         etLatitud        = findViewById(R.id.etLatitud);
         etLongitud       = findViewById(R.id.etLongitud);
@@ -96,6 +104,18 @@ public class ProductoFormActivity extends AppCompatActivity {
         spinnerProveedor = findViewById(R.id.spinnerProveedor);
         tvEstadoGps      = findViewById(R.id.tvEstadoGps);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Verificar si viene en modo editar
+        modo = getIntent().getStringExtra("modo");
+        if (modo == null) modo = "crear";
+        productoId = getIntent().getIntExtra("producto_id", 0);
+
+        Log.d("EDITAR", "Intent modo: " + modo + " | Intent productoId: " + productoId);
+
+        TextView tvTitulo = findViewById(R.id.tvTitulo);
+        if (modo.equals("editar")) {
+            tvTitulo.setText("Editar Producto");
+        }
     }
 
     private void configurarListeners() {
@@ -213,18 +233,13 @@ public class ProductoFormActivity extends AppCompatActivity {
                 try {
                     JSONObject res = new JSONObject(response);
                     if (res.optBoolean("success", false)) {
-                        JSONArray data = res.getJSONArray("data");
-                        listaNombresCat.clear(); listaIdsCat.clear();
-                        listaNombresCat.add("Seleccione categoría"); listaIdsCat.add(0);
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject item = data.getJSONObject(i);
-                            listaNombresCat.add(item.getString("categoria_nombre"));
-                            listaIdsCat.add(Integer.parseInt(item.getString("categoria_id")));
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ProductoFormActivity.this,
-                                android.R.layout.simple_spinner_item, listaNombresCat);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerCategoria.setAdapter(adapter);
+                        Utils.cargarSpinner(ProductoFormActivity.this,
+                                spinnerCategoria,
+                                res.getJSONArray("data"),
+                                listaNombresCat, listaIdsCat,
+                                "categoria_nombre", "categoria_id",
+                                "Seleccione categoría");
+                        verificarSpinnersYCargarDatos();
                     }
                 } catch (Exception e) { Log.e("SPINNER", e.getMessage()); }
             }
@@ -254,6 +269,7 @@ public class ProductoFormActivity extends AppCompatActivity {
                                 android.R.layout.simple_spinner_item, listaNombresUnidad);
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         spinnerUnidad.setAdapter(adapter);
+                        verificarSpinnersYCargarDatos();
                     }
                 } catch (Exception e) { Log.e("SPINNER", e.getMessage()); }
             }
@@ -270,18 +286,13 @@ public class ProductoFormActivity extends AppCompatActivity {
                 try {
                     JSONObject res = new JSONObject(response);
                     if (res.optBoolean("success", false)) {
-                        JSONArray data = res.getJSONArray("data");
-                        listaNombresProv.clear(); listaIdsProv.clear();
-                        listaNombresProv.add("Seleccione proveedor"); listaIdsProv.add(0);
-                        for (int i = 0; i < data.length(); i++) {
-                            JSONObject item = data.getJSONObject(i);
-                            listaNombresProv.add(item.getString("proveedor_nombre"));
-                            listaIdsProv.add(Integer.parseInt(item.getString("proveedor_id")));
-                        }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ProductoFormActivity.this,
-                                android.R.layout.simple_spinner_item, listaNombresProv);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinnerProveedor.setAdapter(adapter);
+                        Utils.cargarSpinner(ProductoFormActivity.this,
+                                spinnerProveedor,
+                                res.getJSONArray("data"),
+                                listaNombresProv, listaIdsProv,
+                                "proveedor_nombre", "proveedor_id",
+                                "Seleccione proveedor");
+                        verificarSpinnersYCargarDatos();
                     }
                 } catch (Exception e) { Log.e("SPINNER", e.getMessage()); }
             }
@@ -291,11 +302,86 @@ public class ProductoFormActivity extends AppCompatActivity {
         });
     }
 
+    private int spinnersListos = 0;
+
+    private void verificarSpinnersYCargarDatos() {
+        spinnersListos++;
+        if (spinnersListos == 3 && modo.equals("editar") && productoId > 0) {
+            cargarDatosProducto();
+        }
+    }
+
+    private void cargarDatosProducto() {
+        ApiService.get(Config.local + "producto_get.php?id=" + productoId,
+                new ApiService.ApiCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        try {
+                            JSONObject res = new JSONObject(response);
+                            if (res.optBoolean("success", false)) {
+                                JSONObject p = res.getJSONObject("data");
+
+                                // Llenar campos de texto
+                                etNombre.setText(p.optString("producto_nombre", ""));
+                                etDescripcion.setText(p.optString("producto_descripcion", ""));
+                                etStock.setText(String.valueOf(p.optInt("producto_stock", 0)));
+                                etPrecio.setText(String.valueOf(p.optDouble("producto_precio", 0.0)));
+                                etCodigoQr.setText(p.optString("producto_codigo_qr", ""));
+
+                                String lat = p.optString("producto_latitud", "");
+                                String lng = p.optString("producto_longitud", "");
+                                if (!lat.equals("null")) etLatitud.setText(lat);
+                                if (!lng.equals("null")) etLongitud.setText(lng);
+
+                                // Seleccionar spinner categoría
+                                int catId  = Integer.parseInt(p.optString("categoria_id", "0"));
+                                int umId   = Integer.parseInt(p.optString("um_id", "0"));
+                                int provId = Integer.parseInt(p.optString("proveedor_id", "0"));
+
+                                Utils.seleccionarSpinner(spinnerCategoria, listaIdsCat, catId);
+                                Utils.seleccionarSpinner(spinnerUnidad,    listaIdsUnidad, umId);
+                                Utils.seleccionarSpinner(spinnerProveedor, listaIdsProv,   provId);
+
+                                // Cargar foto actual
+                                String fotoNombre = p.optString("producto_foto", "");
+                                if (!fotoNombre.isEmpty() && !fotoNombre.equals("null")) {
+                                    String urlFoto = Config.local + "uploads/productos/" + fotoNombre;
+                                    Glide.with(ProductoFormActivity.this)
+                                            .load(urlFoto)
+                                            .centerCrop()
+                                            .into(ivFotoPreview);
+                                    ivFotoPreview.setPadding(0, 0, 0, 0);
+                                    ivFotoPreview.clearColorFilter();
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.e("EDITAR", e.getMessage());
+                            Dialog.toast(ProductoFormActivity.this, "Error cargando producto");
+                        }
+                    }
+                    @Override
+                    public void onError(String error) {
+                        Dialog.toast(ProductoFormActivity.this, "Error de conexión");
+                    }
+                });
+    }
+
+    // Helper para seleccionar el item correcto en un spinner
+    /*private void seleccionarSpinner(Spinner spinner, List<Integer> listaIds, int idBuscado) {
+        for (int i = 0; i < listaIds.size(); i++) {
+            if (listaIds.get(i) == idBuscado) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
+    }*/
+
     // ── Validar ───────────────────────────────────────────
     private void validarYGuardar() {
         String nombre      = etNombre.getText().toString().trim();
         String descripcion = etDescripcion.getText().toString().trim();
         String stockStr    = etStock.getText().toString().trim();
+        String precio      = etPrecio.getText().toString().trim();
         String codigoQr    = etCodigoQr.getText().toString().trim();
         String latitud     = etLatitud.getText().toString().trim();
         String longitud    = etLongitud.getText().toString().trim();
@@ -308,6 +394,10 @@ public class ProductoFormActivity extends AppCompatActivity {
             Dialog.toast(this, "Ingresa el stock inicial");
             etStock.requestFocus(); return;
         }
+        if (precio.isEmpty()) {
+            Dialog.toast(this, "Ingresa el precio inicial");
+            etPrecio.requestFocus(); return;
+        }
         if (spinnerCategoria.getSelectedItemPosition() == 0) {
             Dialog.toast(this, "Selecciona una categoría"); return;
         }
@@ -319,7 +409,7 @@ public class ProductoFormActivity extends AppCompatActivity {
         }
 
         guardarProducto(nombre, descripcion, codigoQr,
-                Integer.parseInt(stockStr), latitud, longitud,
+                Integer.parseInt(stockStr), Double.parseDouble(precio), latitud, longitud,
                 listaIdsCat.get(spinnerCategoria.getSelectedItemPosition()),
                 listaIdsUnidad.get(spinnerUnidad.getSelectedItemPosition()),
                 listaIdsProv.get(spinnerProveedor.getSelectedItemPosition()));
@@ -327,7 +417,7 @@ public class ProductoFormActivity extends AppCompatActivity {
 
     // ── Guardar producto ──────────────────────────────────
     private void guardarProducto(String nombre, String descripcion, String codigoQr,
-                                 int stock, String latitud, String longitud,
+                                 int stock, double precio, String latitud, String longitud,
                                  int catId, int unidadId, int proveedorId) {
         try {
             JSONObject json = new JSONObject();
@@ -335,6 +425,9 @@ public class ProductoFormActivity extends AppCompatActivity {
             json.put("producto_descripcion", descripcion);
             json.put("producto_codigo_qr",   codigoQr);
             json.put("producto_stock",       stock);
+            /*json.put("producto_precio", etPrecio.getText().toString().isEmpty()
+                    ? 0.0 : Double.parseDouble(etPrecio.getText().toString().trim()));*/
+            json.put("producto_precio", precio);
             json.put("producto_latitud",  latitud.isEmpty()  ? JSONObject.NULL : Double.parseDouble(latitud));
             json.put("producto_longitud", longitud.isEmpty() ? JSONObject.NULL : Double.parseDouble(longitud));
             json.put("usuario_id",   Config.iduser);
@@ -342,12 +435,29 @@ public class ProductoFormActivity extends AppCompatActivity {
             json.put("um_id",        unidadId);
             json.put("proveedor_id", proveedorId);
 
+            String endpoint;
+            if (modo.equals("editar")) {
+                json.put("producto_id", productoId);
+                endpoint = Config.local + "producto_update.php";
+            } else {
+                endpoint = Config.local + "producto_insert.php";
+            }
+
+            Log.d("EDITAR", "endpoint: " + endpoint);
+            Log.d("EDITAR", "modo actual: " + modo);
+
+            Log.d("EDITAR", "modo: " + modo + " | productoId: " + productoId);
+            Log.d("EDITAR", "JSON enviado: " + json.toString());
+
             btnGuardar.setEnabled(false);
             btnGuardar.setText("Guardando...");
 
-            ApiService.post(Config.local + "producto_insert.php", json, new ApiService.ApiCallback() {
+            Log.d("PRECIO", "Precio enviado: " + json.optString("producto_precio"));
+
+            ApiService.post(endpoint, json, new ApiService.ApiCallback() {
                 @Override
                 public void onSuccess(String response) {
+                    Log.d("EDITAR_RESPONSE", response);
                     try {
                         JSONObject res = new JSONObject(response);
                         if (res.optBoolean("success", false)) {
@@ -473,6 +583,6 @@ public class ProductoFormActivity extends AppCompatActivity {
 
     private void resetBotonGuardar() {
         btnGuardar.setEnabled(true);
-        btnGuardar.setText("Guardar producto");
+        btnGuardar.setText(modo.equals("editar") ? "Actualizar producto" : "Guardar producto");
     }
 }

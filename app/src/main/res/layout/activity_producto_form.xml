@@ -236,6 +236,37 @@
                             android:inputType="number"/>
                     </androidx.cardview.widget.CardView>
 
+                    <!-- Precio -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Precio *"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="14dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/fondo_gris">
+
+                        <EditText
+                            android:id="@+id/etPrecio"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="L 0.00"
+                            android:textColorHint="@color/gris_icono"
+                            android:textColor="@color/texto_oscuro"
+                            android:textSize="14sp"
+                            android:background="@null"
+                            android:paddingStart="14dp"
+                            android:paddingEnd="14dp"
+                            android:inputType="numberDecimal"/>
+                    </androidx.cardview.widget.CardView>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

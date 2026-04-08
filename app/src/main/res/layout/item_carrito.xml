@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="10dp">
+
+    <!-- NOMBRE Y PRECIO -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvProductoNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#1F2937"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/tvPrecioUnitario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6B7280"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- CONTROLES CANTIDAD -->
+    <ImageButton
+        android:id="@+id/btnMenos"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ct_remove"
+        android:background="@drawable/bg_circle_red"
+        android:tint="#FFFFFF"
+        android:padding="4dp" />
+
+    <TextView
+        android:id="@+id/tvCantidad"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:textColor="#1F2937"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+
+    <ImageButton
+        android:id="@+id/btnMas"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ct_add"
+        android:background="@drawable/bg_circle_green"
+        android:tint="#FFFFFF"
+        android:padding="4dp" />
+
+    <!-- SUBTOTAL LINEA -->
+    <TextView
+        android:id="@+id/tvSubtotalLinea"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:textColor="#10B981"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:gravity="end"
+        android:paddingStart="6dp" />
+
+    <!-- ELIMINAR -->
+    <ImageButton
+        android:id="@+id/btnEliminarItem"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/ct_delete"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:tint="#EF4444"
+        android:layout_marginStart="4dp" />
+
+</LinearLayout>
