@@ -1,4 +1,4 @@
-package com.example.controlstock.modelo;
+package com.example.controlstock.clases;
 
 import android.content.Context;
 import android.view.LayoutInflater;

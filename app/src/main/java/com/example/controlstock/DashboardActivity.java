@@ -107,7 +107,7 @@ public class DashboardActivity extends AppCompatActivity {
         LinearLayout btnVentas = findViewById(R.id.btnAccesoVentas);
         if (btnVentas != null) {
             btnVentas.setOnClickListener(v ->
-                    Dialog.toast(this, "Módulo de ventas próximamente"));
+                    startActivity(new Intent(this, VentaListActivity.class)));
         }
 
         // Bottom Navigation

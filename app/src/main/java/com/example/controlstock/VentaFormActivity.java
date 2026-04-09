@@ -3,9 +3,7 @@ package com.example.controlstock;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.controlstock.clases.ApiService;
 import com.example.controlstock.clases.Config;
 import com.example.controlstock.clases.Dialog;
-import com.example.controlstock.modelo.CarritoAdapter;
+import com.example.controlstock.clases.CarritoAdapter;
 import com.example.controlstock.modelo.Cliente;
 import com.example.controlstock.modelo.DetalleVenta;
 
@@ -27,21 +25,18 @@ import java.util.List;
 public class VentaFormActivity extends AppCompatActivity implements CarritoAdapter.OnCarritoListener {
 
     // Views
-    private EditText    etBuscarCliente, etBuscarProducto;
-    private ListView    lvBusquedaClientes, lvBusquedaProductos, lvCarrito;
-    private TextView    tvNumeroFactura, tvClienteNombre, tvClienteDoc;
+    private EditText    etBuscarCliente, etBuscarProducto, etNombreCliente, etDocumentoCliente;
+    private ListView    lvBusquedaProductos, lvCarrito;
+    private TextView    tvNumeroFactura;
     private TextView    tvCantidadItems, tvSubtotal, tvImpuesto, tvTotal, tvCarritoVacio;
-    private View        layoutClienteSeleccionado;
 
     // Datos
-    private Cliente clienteSeleccionado = null;
     private List<DetalleVenta> carrito            = new ArrayList<>();
     private CarritoAdapter    carritoAdapter;
     private String            numeroFactura       = "";
 
     private static final double ISV        = 0.15;
-    private static final String URL_CLIENTES  = Config.local + "clientes/clientes_get.php";
-    private static final String URL_PRODUCTOS = Config.local + "productos/productos_get.php";
+    private static final String URL_PRODUCTOS = Config.local + "producto_list.php";
     private static final String URL_NUMERO    = Config.local + "ventas/ventas_get_numero.php";
     private static final String URL_POST      = Config.local + "ventas/ventas_post.php";
 
@@ -56,30 +51,24 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
         cargarNumeroFactura();
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
-        findViewById(R.id.btnBuscarCliente).setOnClickListener(v ->
-                buscarCliente(etBuscarCliente.getText().toString().trim()));
         findViewById(R.id.btnBuscarProducto).setOnClickListener(v ->
                 buscarProducto(etBuscarProducto.getText().toString().trim()));
-        findViewById(R.id.btnQuitarCliente).setOnClickListener(v -> quitarCliente());
         findViewById(R.id.btnGuardarVenta).setOnClickListener(v -> guardarVenta());
 
     }
 
     private void initViews() {
-        etBuscarCliente          = findViewById(R.id.etBuscarCliente);
+        etNombreCliente    = findViewById(R.id.etNombreCliente);
+        etDocumentoCliente = findViewById(R.id.etDocumentoCliente);
         etBuscarProducto         = findViewById(R.id.etBuscarProducto);
-        lvBusquedaClientes       = findViewById(R.id.lvBusquedaClientes);
         lvBusquedaProductos      = findViewById(R.id.lvBusquedaProductos);
         lvCarrito                = findViewById(R.id.lvCarrito);
         tvNumeroFactura          = findViewById(R.id.tvNumeroFactura);
-        tvClienteNombre          = findViewById(R.id.tvClienteNombre);
-        tvClienteDoc             = findViewById(R.id.tvClienteDoc);
         tvCantidadItems          = findViewById(R.id.tvCantidadItems);
         tvSubtotal               = findViewById(R.id.tvSubtotal);
         tvImpuesto               = findViewById(R.id.tvImpuesto);
         tvTotal                  = findViewById(R.id.tvTotal);
         tvCarritoVacio           = findViewById(R.id.tvCarritoVacio);
-        layoutClienteSeleccionado = findViewById(R.id.layoutClienteSeleccionado);
     }
 
     private void setupCarrito() {
@@ -112,79 +101,7 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
 
     // ─── CLIENTE ──────────────────────────────────────────────────────────────
 
-    private void buscarCliente(String texto) {
-        if (texto.isEmpty()) {
-            Dialog.toast(this, "Escribe un nombre o documento");
-            return;
-        }
 
-        String url = URL_CLIENTES + "?buscar=" + texto;
-        ApiService.get(url, new ApiService.ApiCallback() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    JSONObject json  = new JSONObject(response);
-                    JSONArray  array = json.getJSONArray("data");
-
-                    List<Cliente> resultados = new ArrayList<>();
-                    List<String>  etiquetas  = new ArrayList<>();
-
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject obj = array.getJSONObject(i);
-                        Cliente c = new Cliente(
-                                obj.getInt("cliente_id"),
-                                obj.optString("cliente_documento", ""),
-                                obj.optString("cliente_nombre", ""),
-                                obj.optString("cliente_telefono", ""),
-                                obj.optString("cliente_email", "")
-                        );
-                        resultados.add(c);
-                        etiquetas.add(c.getClienteNombre() + " - " + c.getClienteDocumento());
-                    }
-
-                    runOnUiThread(() -> {
-                        if (resultados.isEmpty()) {
-                            Dialog.toast(VentaFormActivity.this, "No se encontraron clientes");
-                            lvBusquedaClientes.setVisibility(View.GONE);
-                            return;
-                        }
-
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                                VentaFormActivity.this,
-                                android.R.layout.simple_list_item_1,
-                                etiquetas
-                        );
-                        lvBusquedaClientes.setAdapter(adapter);
-                        lvBusquedaClientes.setVisibility(View.VISIBLE);
-
-                        lvBusquedaClientes.setOnItemClickListener((parent, view, position, id) -> {
-                            seleccionarCliente(resultados.get(position));
-                        });
-                    });
-                } catch (Exception e) {
-                    runOnUiThread(() -> Dialog.toast(VentaFormActivity.this, "Error al buscar clientes"));
-                }
-            }
-            @Override
-            public void onError(String error) {
-                runOnUiThread(() -> Dialog.toast(VentaFormActivity.this, "Error de conexión"));
-            }
-        });
-    }
-
-    private void seleccionarCliente(Cliente cliente) {
-        clienteSeleccionado = cliente;
-        tvClienteNombre.setText(cliente.getClienteNombre());
-        tvClienteDoc.setText("Doc: " + cliente.getClienteDocumento());
-        layoutClienteSeleccionado.setVisibility(View.VISIBLE);
-        lvBusquedaClientes.setVisibility(View.GONE);
-        etBuscarCliente.setText("");
-    }
-
-    private void quitarCliente() {
-        clienteSeleccionado = null;
-        layoutClienteSeleccionado.setVisibility(View.GONE);
-    }
 
     // ─── PRODUCTO ─────────────────────────────────────────────────────────────
 
@@ -194,7 +111,7 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
             return;
         }
 
-        String url = URL_PRODUCTOS + "?buscar=" + texto;
+        String url = URL_PRODUCTOS + "?busqueda=" + texto;
         ApiService.get(url, new ApiService.ApiCallback() {
             @Override
             public void onSuccess(String response) {
@@ -209,7 +126,7 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
                         JSONObject obj = array.getJSONObject(i);
                         resultados.add(obj);
                         etiquetas.add(obj.getString("producto_nombre")
-                                + "  |  L. " + obj.getString("producto_precio_venta")
+                                + "  |  L. " + obj.optString("producto_precio", "0.00")
                                 + "  |  Stock: " + obj.getString("producto_stock"));
                     }
 
@@ -250,7 +167,7 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
     private void agregarAlCarrito(JSONObject producto) throws Exception {
         int    productoId = producto.getInt("producto_id");
         String nombre     = producto.getString("producto_nombre");
-        double precio     = producto.getDouble("producto_precio_venta");
+        double precio     = producto.optDouble("producto_precio", 0.0);
 
         // Si ya existe en el carrito, solo suma cantidad
         for (DetalleVenta item : carrito) {
@@ -308,30 +225,25 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
     // ─── GUARDAR VENTA ────────────────────────────────────────────────────────
 
     private void guardarVenta() {
-        if (clienteSeleccionado == null) {
-            Dialog.toast(this, "Debe seleccionar un cliente");
+        String nombreCliente = etNombreCliente.getText().toString().trim();
+        String docCliente    = etDocumentoCliente.getText().toString().trim();
+
+        if (nombreCliente.isEmpty()) {
+            Dialog.toast(this, "Ingresa el nombre del cliente");
+            return;
+        }
+        if (docCliente.isEmpty()) {
+            Dialog.toast(this, "Ingresa el documento del cliente");
             return;
         }
         if (carrito.isEmpty()) {
             Dialog.toast(this, "El carrito está vacío");
             return;
         }
-
-        Dialog.confirm(
-                this,
-                "Confirmar venta",
-                "¿Desea guardar la venta #" + numeroFactura + " por " + tvTotal.getText() + "?",
-                android.R.drawable.ic_dialog_info,
-                new Dialog.ConfirmationDialogCallback() {
-                    @Override
-                    public void onConfirm() { procesarVenta(); }
-                    @Override
-                    public void onCancel()  { }
-                }
-        );
+        procesarVenta(nombreCliente, docCliente);
     }
 
-    private void procesarVenta() {
+    private void procesarVenta(String nombreCliente, String docCliente) {
         try {
             double subtotal = 0;
             for (DetalleVenta item : carrito) subtotal += item.getSubtotalLineal();
@@ -354,7 +266,8 @@ public class VentaFormActivity extends AppCompatActivity implements CarritoAdapt
             body.put("factura_subtotal",        subtotal);
             body.put("factura_total_impuesto",  impuesto);
             body.put("factura_total",           total);
-            body.put("cliente_id",             clienteSeleccionado.getClienteId());
+            body.put("cliente_nombre",    nombreCliente);
+            body.put("cliente_documento", docCliente);
             body.put("usuario_id",             Config.iduser);
             body.put("detalles",               detallesJson);
 
