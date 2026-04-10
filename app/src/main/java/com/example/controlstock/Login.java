@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,7 @@ public class Login extends AppCompatActivity {
     private static final String CLAVE_RECORDAR = "recordarme";
     private static final String CLAVE_USUARIO  = "usuario";
 
+    private TextView tvOlvidePassword;
     private static final String CLAVE_CLAVE    = "clave";
 
     @Override
@@ -46,6 +48,16 @@ public class Login extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         eye = findViewById(R.id.iv_toggle_password);
         chRecordarme = findViewById(R.id.cb_recordarme);
+
+        tvOlvidePassword = findViewById(R.id.tv_olvide_password);
+
+        tvOlvidePassword.setOnClickListener(v ->
+                Dialog.msgbox(this,
+                        "Recuperar contraseña",
+                        "Para restablecer tu contraseña, comunícate con el administrador del sistema.",
+                        R.drawable.ct_lock)
+        );
+
         mostrarPassword();
 
         btnIngresar = findViewById(R.id.btn_iniciar_sesion);
@@ -162,13 +174,16 @@ public class Login extends AppCompatActivity {
                     String username = data.getString("user_nombre");
                     int userId      = data.getInt("user_id");
                     int rolId       = data.getInt("rol_id");
+                    String correo     = data.optString("user_correo", "");
+                    String userNombre = data.optString("user_nombre", "");
 
                     Config.usuario = username;
                     Config.iduser = userId;
                     Config.rolId   = rolId;
+                    Config.correo     = correo;
+                    Config.userNombre = userNombre;
 
-                    // Cargar accesos antes de ir al Dashboard
-                    cargarAccesosYNavegar(username, userId);
+
 
                     if (recordar) {
                         guardarUsuario(usuario, clave);
@@ -176,7 +191,8 @@ public class Login extends AppCompatActivity {
                         borrarUsuarioGuardado();
                     }
 
-                    llamarPral(username, userId);
+                    // Cargar accesos antes de ir al Dashboard
+                    cargarAccesosYNavegar(username, userId);
 
                 } catch (Exception e) {
                     Log.e("LOGIN_PARSE", "Error: " + e.getMessage());

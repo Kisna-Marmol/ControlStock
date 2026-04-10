@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#FFFFFF"
+            app:tabSelectedTextColor="#3F51B5"
             app:tabTextColor="#93C5FD"
             app:tabIndicatorColor="#FFFFFF"
             app:tabIndicatorHeight="3dp"

@@ -153,6 +153,7 @@ public class ProveedoresFragment extends Fragment {
                          String telefono, String nit, boolean esEditar) {
         try {
             JSONObject body = new JSONObject();
+            body.put("usuario_id", Config.iduser);
             body.put("proveedor_nombre",   nombre);
             body.put("proveedor_contacto", contacto);
             body.put("proveedor_telefono", telefono);
@@ -190,7 +191,7 @@ public class ProveedoresFragment extends Fragment {
                 .setTitle("Eliminar proveedor")
                 .setMessage("¿Eliminar \"" + nombre + "\"?")
                 .setPositiveButton("Eliminar", (dialog, which) -> {
-                    ApiService.get(Config.local + "proveedor_delete.php?id=" + id,
+                    ApiService.get(Config.local + "proveedor_delete.php?id=" + id + "&usuario_id=" + Config.iduser,
                             new ApiService.ApiCallback() {
                                 @Override
                                 public void onSuccess(String response) {

@@ -142,6 +142,7 @@ public class CategoriasFragment extends Fragment {
     private void guardar(int id, String nombre, boolean esEditar) {
         try {
             JSONObject body = new JSONObject();
+            body.put("usuario_id", Config.iduser);
             body.put("categoria_nombre", nombre);
 
             String url;
@@ -176,7 +177,7 @@ public class CategoriasFragment extends Fragment {
                 .setTitle("Eliminar categoría")
                 .setMessage("¿Eliminar \"" + nombre + "\"?")
                 .setPositiveButton("Eliminar", (dialog, which) -> {
-                    ApiService.get(Config.local + "categoria_delete.php?id=" + id,
+                    ApiService.get(Config.local + "categoria_delete.php?id=" + id + "&usuario_id=" + Config.iduser,
                             new ApiService.ApiCallback() {
                                 @Override
                                 public void onSuccess(String response) {

@@ -63,10 +63,10 @@ public class ConfiguracionActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ControlAccesosActivity.class)));
 
         btnUsuarios.setOnClickListener(v ->
-                Dialog.toast(this, "Módulo de usuarios próximamente"));
+                startActivity(new Intent(this, UsuariosActivity.class)));
 
         btnCatalogos.setOnClickListener(v ->
-                Dialog.toast(this, "Módulo de catálogos próximamente"));
+                startActivity(new Intent(this, CatalogosActivity.class)));
 
         /*btnMovimientos.setOnClickListener(v ->
                 startActivity(new Intent(this, MovimientoFormActivity.class)));*/
@@ -75,7 +75,7 @@ public class ConfiguracionActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MovimientoListActivity.class)));
 
         btnPerfil.setOnClickListener(v ->
-                Dialog.toast(this, "Módulo de perfil próximamente"));
+                startActivity(new Intent(this, PerfilActivity.class)));;
 
         btnCerrarSesion.setOnClickListener(v -> {
             Dialog.confirm(this,

@@ -56,32 +56,37 @@ public class BitacoraActivity extends AppCompatActivity {
         ApiService.get(Config.local + "bitacora_list.php", new ApiService.ApiCallback() {
             @Override
             public void onSuccess(String response) {
-                try {
-                    JSONObject res = new JSONObject(response);
-                    if (res.optBoolean("success", false)) {
-                        JSONArray data = res.getJSONArray("data");
-                        progressBar.setVisibility(View.GONE);
-                        layoutBitacora.setVisibility(View.VISIBLE);
+                Log.d("BITACORA_RESPONSE", response);
+                runOnUiThread(() -> {
+                    try {
+                        JSONObject res = new JSONObject(response);
+                        if (res.optBoolean("success", false)) {
+                            JSONArray data = res.getJSONArray("data");
+                            progressBar.setVisibility(View.GONE);
+                            layoutBitacora.setVisibility(View.VISIBLE);
 
-                        if (data.length() == 0) {
-                            layoutVacio.setVisibility(View.VISIBLE);
-                            tvContador.setText("Sin registros");
-                            return;
+                            if (data.length() == 0) {
+                                layoutVacio.setVisibility(View.VISIBLE);
+                                tvContador.setText("Sin registros");
+                                return;
+                            }
+
+                            tvContador.setText(data.length() + " registros");
+                            renderizarBitacora(data);
                         }
-
-                        tvContador.setText(data.length() + " registros");
-                        renderizarBitacora(data);
+                    } catch (Exception e) {
+                        Log.e("BITACORA", e.getMessage());
+                        progressBar.setVisibility(View.GONE);
+                        Dialog.toast(BitacoraActivity.this, "Error cargando bitácora");
                     }
-                } catch (Exception e) {
-                    Log.e("BITACORA", e.getMessage());
-                    progressBar.setVisibility(View.GONE);
-                    Dialog.toast(BitacoraActivity.this, "Error cargando bitácora");
-                }
+                });
             }
             @Override
             public void onError(String error) {
-                progressBar.setVisibility(View.GONE);
-                Dialog.toast(BitacoraActivity.this, "Error de conexión");
+                runOnUiThread(() -> {
+                    progressBar.setVisibility(View.GONE);
+                    Dialog.toast(BitacoraActivity.this, "Error de conexión");
+                });
             }
         });
     }
@@ -89,11 +94,13 @@ public class BitacoraActivity extends AppCompatActivity {
     // ── Renderizar registros ──────────────────────────────
     private void renderizarBitacora(JSONArray data) {
         layoutBitacora.removeAllViews();
+        Log.d("BITACORA_RENDER", "Total items: " + data.length());
         LayoutInflater inflater = LayoutInflater.from(this);
 
         for (int i = 0; i < data.length(); i++) {
             try {
                 JSONObject item = data.getJSONObject(i);
+                Log.d("BITACORA_RENDER", "Item " + i + ": " + item.optString("bitacora_accion"));
 
                 String accion      = item.optString("bitacora_accion", "");
                 String descripcion = item.optString("bitacora_descripcion", "");
@@ -135,6 +142,18 @@ public class BitacoraActivity extends AppCompatActivity {
             case "CREAR_PRODUCTO":     return "Producto creado";
             case "EDITAR_PRODUCTO":    return "Producto editado";
             case "ELIMINAR_PRODUCTO":  return "Producto eliminado";
+            case "CREAR_CATEGORIA":     return "Categoría creada";
+            case "EDITAR_CATEGORIA":    return "Categoría editada";
+            case "ELIMINAR_CATEGORIA":  return "Categoría eliminada";
+            case "CREAR_PROVEEDOR":     return "Proveedor creado";
+            case "EDITAR_PROVEEDOR":    return "Proveedor editado";
+            case "ELIMINAR_PROVEEDOR":  return "Proveedor eliminado";
+            case "CREAR_UNIDAD":        return "Unidad creada";
+            case "EDITAR_UNIDAD":       return "Unidad editada";
+            case "ELIMINAR_UNIDAD":     return "Unidad eliminada";
+            case "ENTRADA_STOCK":  return "Entrada de stock";
+            case "SALIDA_STOCK":   return "Salida de stock";
+            case "VENTA":               return "Venta registrada";
             case "LOGIN":              return "Inicio de sesión";
             case "LOGOUT":             return "Cierre de sesión";
             default:                   return accion;

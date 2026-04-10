@@ -14,6 +14,8 @@ public class Config {
     public static String usuario="";
     public static int iduser = 0;
     public static int rolId     = 0;
+    public static String correo     = "";
+    public static String userNombre = "";
 
     // Lista de accesos activos del usuario
     public static List<String> accesosActivos = new ArrayList<>();

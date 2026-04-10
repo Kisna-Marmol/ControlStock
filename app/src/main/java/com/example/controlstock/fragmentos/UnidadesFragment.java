@@ -142,6 +142,7 @@ public class UnidadesFragment extends Fragment {
     private void guardar(int id, String nombre, String abrev, boolean esEditar) {
         try {
             JSONObject body = new JSONObject();
+            body.put("usuario_id", Config.iduser);
             body.put("um_nombre",       nombre);
             body.put("um_abreviatura",  abrev);
 
@@ -177,7 +178,7 @@ public class UnidadesFragment extends Fragment {
                 .setTitle("Eliminar unidad")
                 .setMessage("¿Eliminar \"" + nombre + "\"?")
                 .setPositiveButton("Eliminar", (dialog, which) -> {
-                    ApiService.get(Config.local + "unidad_delete.php?id=" + id,
+                    ApiService.get(Config.local + "unidad_delete.php?id=" + id + "&usuario_id=" + Config.iduser,
                             new ApiService.ApiCallback() {
                                 @Override
                                 public void onSuccess(String response) {

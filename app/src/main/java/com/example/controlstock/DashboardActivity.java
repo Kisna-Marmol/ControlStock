@@ -30,6 +30,8 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView tvTotalProductos, tvStockBajo, tvSinStock, tvCategorias;
     private LinearLayout layoutActividad;
 
+    private ImageView ivPerfil;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void inicializarVistas() {
         tvNombreUsuario  = findViewById(R.id.tvNombreUsuario);
+
         btnProducto      = findViewById(R.id.btnAccesoProductos);
         // Tarjetas de resumen — usar los IDs reales de tu XML
         tvTotalProductos = findViewById(R.id.tvProductosValor);  // Productos
@@ -74,6 +77,9 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void configurarAccesos() {
+        findViewById(R.id.ivPerfil).setOnClickListener(v ->
+                startActivity(new Intent(this, PerfilActivity.class)));
+
         btnProducto.setOnClickListener(v -> {
             if (Config.tieneAcceso("EMP_PROD_VER") || Config.esAdmin()) {
                 startActivity(new Intent(this, ProductoListActivity.class));
@@ -86,7 +92,7 @@ public class DashboardActivity extends AppCompatActivity {
         LinearLayout btnReportes = findViewById(R.id.btnAccesoReportes);
         if (btnReportes != null) {
             btnReportes.setOnClickListener(v ->
-                    Dialog.toast(this, "Módulo de reportes próximamente"));
+                    startActivity(new Intent(this, ReportesActivity.class)));
         }
 
         // Acceso Config
@@ -116,11 +122,11 @@ public class DashboardActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.nav_inicio) {
                 return true;
-            } else if (id == R.id.nav_reportes) {
-                Dialog.toast(this, "Reportes próximamente");
+            }  else if (id == R.id.nav_reportes) {
+                startActivity(new Intent(this, ReportesActivity.class));
                 return true;
             } else if (id == R.id.nav_notificaciones) {
-                Dialog.toast(this, "Notificaciones próximamente");
+                startActivity(new Intent(this, NotificacionesActivity.class));
                 return true;
             } else if (id == R.id.nav_config) {
                 startActivity(new Intent(this, ConfiguracionActivity.class));
@@ -139,20 +145,21 @@ public class DashboardActivity extends AppCompatActivity {
                     JSONObject res = new JSONObject(response);
                     if (res.optBoolean("success", false)) {
 
-                        // Métricas en las tarjetas
-                        String totalProductos  = res.optString("total_productos", "0");
-                        String stockBajo       = res.optString("stock_bajo", "0");
-                        String sinStock        = res.optString("sin_stock", "0");
-                        String totalCategorias = res.optString("total_categorias", "0");
+                        String totalProductos = res.optString("total_productos", "0");
+                        String totalClientes  = res.optString("total_clientes",  "0");
+                        String ventasHoy      = res.optString("ventas_hoy",      "0");
+                        double ingresosHoy    = res.optDouble("ingresos_hoy",    0.0);
 
+                        // Tarjetas — ajusta según los IDs de tu XML
                         if (tvTotalProductos != null) tvTotalProductos.setText(totalProductos);
-                        if (tvStockBajo != null)      tvStockBajo.setText(stockBajo);
-                        if (tvSinStock != null)        tvSinStock.setText(sinStock);
-                        if (tvCategorias != null)      tvCategorias.setText(totalCategorias);
+                        if (tvCategorias != null)     tvCategorias.setText(totalClientes);
+                        if (tvSinStock != null)       tvSinStock.setText(ventasHoy);
+                        if (tvStockBajo != null)      tvStockBajo.setText(
+                                String.format("L %.1fk", ingresosHoy / 1000));
 
                         // Actividad reciente
                         JSONArray recientes = res.getJSONArray("recientes");
-                        mostrarActividadReciente(recientes);
+                        runOnUiThread(() -> mostrarActividadReciente(recientes));
                     }
                 } catch (Exception e) {
                     Log.e("DASHBOARD", e.getMessage());
